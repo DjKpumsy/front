@@ -60,7 +60,7 @@ function App() {
         if (!refillInterval) {
             const intervalId = setInterval(() => {
                 setProgress(prevProgress => {
-                    if (prevProgress < 100) {
+                    if (prevProgress < 1000) {
                         return prevProgress + 1;
                     } else {
                         clearInterval(intervalId);
