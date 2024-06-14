@@ -15,6 +15,7 @@ function App() {
     const [user, setUser] = useState(null);
     const [points, setPoints] = useState(100000000);
     const [referralLink, setReferralLink] = useState('');
+    const [showPlusOne, setShowPlusOne] = useState(false);
 
     const now = 60;
  
@@ -52,6 +53,13 @@ function App() {
             // Optimistically update points
             setPoints(prevPoints => prevPoints + 1);
 
+            setShowPlusOne(true);
+
+            setTimeout(() => {
+                setShowPlusOne(false);
+            }, 1000); // Hide "+1" after 1 second
+
+
             try {
                 const res = await axios.post('https://back-w4s1.onrender.com/addPoints', {
                     telegramId: user.telegramId
@@ -67,7 +75,7 @@ function App() {
         }
     };
 
-    
+
     return (
         <div className="App">
             {/* <h1>Welcome {user ? user.username : 'User'}</h1> */}
@@ -78,12 +86,14 @@ function App() {
                 style={{ cursor: 'pointer', width: '40px', height: '40px', marginBottom: '-3px', marginRight: '-12px' }} 
             /> {points} </h1>
             
-            <img 
-                src={buttonImage} 
-                alt="Earn Points" 
-                onClick={addPoints} 
-                style={{ cursor: 'pointer', width: '300px', height: '320px' }} 
-            />
+            <div className="image-container" onClick={addPoints}>
+                {showPlusOne && <div className="plus-one">+1</div>}
+                <img 
+                    src={buttonImage} 
+                    alt="Earn Points" 
+                    style={{ cursor: 'pointer', width: '300px', height: '320px' }} 
+                />
+            </div>
 
             {/* <p>Your referral link: {referralLink}</p> */}
             <div className='lab'>
