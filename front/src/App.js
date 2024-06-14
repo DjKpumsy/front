@@ -15,6 +15,8 @@ function App() {
     const [user, setUser] = useState(null);
     const [points, setPoints] = useState(100000000);
     const [referralLink, setReferralLink] = useState('');
+    const [vibrate, setVibrate] = useState(false); // State for vibration effect
+
    
     const now = 60;
  
@@ -52,6 +54,8 @@ function App() {
             // Optimistically update points
             setPoints(prevPoints => prevPoints + 1);
 
+            setVibrate(true); // Trigger vibration effect
+
             try {
                 const res = await axios.post('https://back-w4s1.onrender.com/addPoints', {
                     telegramId: user.telegramId
@@ -64,6 +68,9 @@ function App() {
                 // Revert points if the API call fails
                 setPoints(prevPoints => prevPoints - 1);
             }
+
+              // Remove vibration effect after 300ms
+              setTimeout(() => setVibrate(false), 300);
         }
     };
 
@@ -78,7 +85,7 @@ function App() {
                 style={{ cursor: 'pointer', width: '40px', height: '40px', marginBottom: '-3px', marginRight: '-12px' }} 
             /> {points} </h1>
             
-            <div className="image-container" onClick={addPoints}>
+            <div className={`image-container ${vibrate ? 'vibrate' : ''}`} onClick={addPoints}>
                 
                 <img 
                     src={buttonImage} 
