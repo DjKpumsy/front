@@ -51,28 +51,37 @@ function App() {
         }
     }, []);
 
-    const startRefill = () => {
-        if (!refillInterval) {
-            const intervalId = setInterval(() => {
-                setProgress(prevProgress => {
-                    if (prevProgress < 100) {
-                        return prevProgress + 1;
-                    } else {
-                        clearInterval(intervalId);
-                        return prevProgress;
-                    }
-                });
-            }, 100); // Adjust the refill speed as needed
-            setRefillInterval(intervalId);
-        }
-    };
+  
 
-    const stopRefill = () => {
-        if (refillInterval) {
-            clearInterval(refillInterval);
-            setRefillInterval(null);
-        }
-    };
+    useEffect(() => {
+        // Function to start the refill process
+        const startRefill = () => {
+            if (!refillInterval) {
+                const intervalId = setInterval(() => {
+                    setProgress(prevProgress => {
+                        if (prevProgress < 100) {
+                            return prevProgress + 1;
+                        } else {
+                            clearInterval(intervalId);
+                            setRefillInterval(null);
+                            return prevProgress;
+                        }
+                    });
+                }, 1000); // Adjust the refill speed as needed
+                setRefillInterval(intervalId);
+            }
+        };
+
+        // Start the refill process when the component mounts
+        startRefill();
+
+        // Cleanup the interval when the component unmounts
+        return () => {
+            if (refillInterval) {
+                clearInterval(refillInterval);
+            }
+        };
+    }, [refillInterval]);
 
     const addPoints = async () => {
         if (progress === 0) return; // Stop function if progress is 0
@@ -106,17 +115,6 @@ function App() {
         }
     };
 
-    useEffect(() => {
-        // Start the refill process when the component mounts
-        startRefill();
-
-        // Cleanup the interval when the component unmounts
-        return () => {
-            if (refillInterval) {
-                clearInterval(refillInterval);
-            }
-        };
-    }, []);
 
 
     return (
