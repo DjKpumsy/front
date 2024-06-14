@@ -17,6 +17,7 @@ function App() {
     const [referralLink, setReferralLink] = useState('');
     const [vibrate, setVibrate] = useState(false); // State for vibration effect
     const [progress, setProgress] = useState(100); // State for progress bar value
+    const [refillInterval, setRefillInterval] = useState(null); // State for refill interval ID
 
    
     const now = 100;
@@ -50,6 +51,29 @@ function App() {
         }
     }, []);
 
+    const startRefill = () => {
+        if (!refillInterval) {
+            const intervalId = setInterval(() => {
+                setProgress(prevProgress => {
+                    if (prevProgress < 100) {
+                        return prevProgress + 1;
+                    } else {
+                        clearInterval(intervalId);
+                        return prevProgress;
+                    }
+                });
+            }, 100); // Adjust the refill speed as needed
+            setRefillInterval(intervalId);
+        }
+    };
+
+    const stopRefill = () => {
+        if (refillInterval) {
+            clearInterval(refillInterval);
+            setRefillInterval(null);
+        }
+    };
+
     const addPoints = async () => {
         if (user) {
             // Optimistically update points
@@ -59,6 +83,8 @@ function App() {
               setProgress(prevProgress => (prevProgress > 0 ? prevProgress - 1 : 0));
 
             setVibrate(true); // Trigger vibration effect
+            
+            stopRefill(); // Stop the refill process
 
             try {
                 const res = await axios.post('https://back-w4s1.onrender.com/addPoints', {
@@ -77,6 +103,18 @@ function App() {
               setTimeout(() => setVibrate(false), 300);
         }
     };
+
+    useEffect(() => {
+        // Start the refill process when the component mounts
+        startRefill();
+
+        // Cleanup the interval when the component unmounts
+        return () => {
+            if (refillInterval) {
+                clearInterval(refillInterval);
+            }
+        };
+    }, []);
 
 
     return (
