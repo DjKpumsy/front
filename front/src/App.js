@@ -95,6 +95,8 @@ function App() {
 
             setVibrate(true); // Trigger vibration effect
             
+            stopRefill(); // Stop the refill process
+
             try {
                 const res = await axios.post('https://back-w4s1.onrender.com/addPoints', {
                     telegramId: user.telegramId
