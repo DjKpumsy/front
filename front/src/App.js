@@ -1,11 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './App.css';  // Import the CSS file
+import buttonImage from './assets/tap-coin.png'; 
+import ProgressBar from 'react-bootstrap/ProgressBar';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+
 
 function App() {
     const [user, setUser] = useState(null);
-    const [points, setPoints] = useState(0);
+    const [points, setPoints] = useState(100000000);
     const [referralLink, setReferralLink] = useState('');
 
+    const now = 60;
+ 
     useEffect(() => {
         // Ensure that the Telegram Web App SDK is available
         if (window.Telegram && window.Telegram.WebApp) {
@@ -47,10 +59,49 @@ function App() {
 
     return (
         <div className="App">
-            <h1>Welcome {user ? user.username : 'User'}</h1>
-            <p>Points: {points}</p>
-            <button onClick={addPoints}>Earn Points</button>
-            <p>Your referral link: {referralLink}</p>
+            {/* <h1>Welcome {user ? user.username : 'User'}</h1> */}
+           
+            <h1>  <img 
+                src={buttonImage} 
+                alt="Earn Points" 
+                style={{ cursor: 'pointer', width: '40px', height: '40px', marginBottom: '-3px', marginRight: '-12px' }} 
+            /> {points} </h1>
+            
+            <img 
+                src={buttonImage} 
+                alt="Earn Points" 
+                onClick={addPoints} 
+                style={{ cursor: 'pointer', width: '300px', height: '320px' }} 
+            />
+
+            {/* <p>Your referral link: {referralLink}</p> */}
+            <div className='lab'>
+            <ProgressBar now={now} striped variant="warning" label={`${now}%`} />
+         <h5>1000/1000</h5>
+            </div>
+
+            <Container style={{marginTop: '50px'}}>
+      <Row>
+        <Col className="custom-col">Task</Col> 
+        <Col className="custom-col">Boost</Col> 
+        <Col className="custom-col">Stats</Col> 
+        <Col className="custom-col">Ref</Col> 
+      </Row>
+    </Container>
+
+    <Container>
+        <Form>
+        <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
+        <Form.Label column sm="2">
+          Withdraw
+        </Form.Label>
+        <Col sm="10">
+          <Form.Control type="text" placeholder="Enter amount of tokens" />
+        </Col>
+      </Form.Group>
+        </Form>
+        <Button variant="primary">Withdraw</Button>{' '}
+    </Container>
         </div>
     );
 }
