@@ -164,7 +164,7 @@ function App() {
         </Col>
       </Form.Group>
         </Form>
-        <Button variant="primary">Withdraw</Button>{' '}
+        <Button variant="primary" onClick={startRefill}>Withdraw</Button>{' '}
     </Container>
         </div>
     );
