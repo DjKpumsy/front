@@ -8,7 +8,7 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-  font-family: Arial;
+  font-family: Arial, sans-serif;
 }
 
 .App button {
@@ -103,4 +103,28 @@ width: 80%;
   60% { transform: translate(-2px, 2px); }
   80% { transform: translate(2px, -2px); }
   100% { transform: translate(0); }
+}
+
+@keyframes move {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 100% 100%;
+  }
+}
+
+.progress-bar-animated {
+  animation: move 2s linear infinite;
+  background: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.2) 25%,
+    rgba(0, 0, 0, 0.2) 25%,
+    rgba(0, 0, 0, 0.2) 50%,
+    rgba(255, 255, 255, 0.2) 50%,
+    rgba(255, 255, 255, 0.2) 75%,
+    rgba(0, 0, 0, 0.2) 75%,
+    rgba(0, 0, 0, 0.2) 100%
+  );
+  background-size: 200% 200%;
 }
