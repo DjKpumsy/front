@@ -68,7 +68,7 @@ function App() {
                         return prevProgress;
                     }
                 });
-            }, 3000); // Adjust the refill speed as needed
+            }, 4000); // Adjust the refill speed as needed
             setRefillInterval(intervalId);
         }
     };
