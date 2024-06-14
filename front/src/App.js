@@ -93,9 +93,6 @@ function App() {
               // Reduce progress bar value
               setProgress(prevProgress => (prevProgress > 0 ? prevProgress - 1 : 0));
 
-              startRefill();
-
-
             setVibrate(true); // Trigger vibration effect
             
             try {
