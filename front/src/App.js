@@ -75,6 +75,8 @@ function App() {
     };
 
     const addPoints = async () => {
+        if (progress === 0) return; // Stop function if progress is 0
+
         if (user) {
             // Optimistically update points
             setPoints(prevPoints => prevPoints + 1);
@@ -139,7 +141,7 @@ function App() {
             {/* <p>Your referral link: {referralLink}</p> */}
             <div className='lab'>
             <ProgressBar now={progress} striped variant="warning" label={`${progress}%`} />
-                <h5>{progress * 1}/1000</h5>
+                <h5>{progress * 10}/1000</h5>
             </div>
 
             <Container style={{marginTop: '50px'}}>
