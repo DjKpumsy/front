@@ -10,7 +10,6 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
-
 function App() {
     const [user, setUser] = useState(null);
     const [points, setPoints] = useState(100000000);
@@ -19,9 +18,6 @@ function App() {
     const [progress, setProgress] = useState(100); // State for progress bar value
     const [refillInterval, setRefillInterval] = useState(null); // State for refill interval ID
 
-   
-    const now = 100;
- 
     useEffect(() => {
         // Ensure that the Telegram Web App SDK is available
         if (window.Telegram && window.Telegram.WebApp) {
@@ -50,8 +46,6 @@ function App() {
             console.error('Telegram Web App SDK not found');
         }
     }, []);
-
-  
 
     useEffect(() => {
         // Function to start the refill process
@@ -90,12 +84,16 @@ function App() {
             // Optimistically update points
             setPoints(prevPoints => prevPoints + 1);
 
-              // Reduce progress bar value
-              setProgress(prevProgress => (prevProgress > 0 ? prevProgress - 1 : 0));
+            // Reduce progress bar value
+            setProgress(prevProgress => (prevProgress > 0 ? prevProgress - 1 : 0));
 
             setVibrate(true); // Trigger vibration effect
-            
-            stopRefill(); // Stop the refill process
+
+            // Stop the refill process
+            if (refillInterval) {
+                clearInterval(refillInterval);
+                setRefillInterval(null);
+            }
 
             try {
                 const res = await axios.post('https://back-w4s1.onrender.com/addPoints', {
@@ -110,12 +108,34 @@ function App() {
                 setPoints(prevPoints => prevPoints - 1);
             }
 
-              // Remove vibration effect after 300ms
-              setTimeout(() => setVibrate(false), 300);
+            // Remove vibration effect after 300ms
+            setTimeout(() => setVibrate(false), 300);
         }
     };
 
+    const handleMouseDown = () => {
+        if (refillInterval) {
+            clearInterval(refillInterval);
+            setRefillInterval(null);
+        }
+    };
 
+    const handleMouseUp = () => {
+        if (!refillInterval) {
+            const intervalId = setInterval(() => {
+                setProgress(prevProgress => {
+                    if (prevProgress < 100) {
+                        return prevProgress + 1;
+                    } else {
+                        clearInterval(intervalId);
+                        setRefillInterval(null);
+                        return prevProgress;
+                    }
+                });
+            }, 1000); // Adjust the refill speed as needed
+            setRefillInterval(intervalId);
+        }
+    };
 
     return (
         <div className="App">
@@ -127,7 +147,10 @@ function App() {
                 style={{ cursor: 'pointer', width: '40px', height: '40px', marginBottom: '-3px', marginRight: '-12px' }} 
             /> {points} </h1>
             
-            <div className={`image-container ${vibrate ? 'vibrate' : ''}`} onClick={addPoints}>
+            <div className={`image-container ${vibrate ? 'vibrate' : ''}`} 
+                onClick={addPoints} 
+                onMouseDown={handleMouseDown} 
+                onMouseUp={handleMouseUp}>
                 
                 <img 
                     src={buttonImage} 
@@ -138,32 +161,32 @@ function App() {
            
             {/* <p>Your referral link: {referralLink}</p> */}
             <div className='lab'>
-            <ProgressBar now={progress} striped variant="warning" label={`${progress}%`} />
+                <ProgressBar now={progress} striped variant="warning" label={`${progress}%`} />
                 <h5>{progress * 10}/1000</h5>
             </div>
 
             <Container style={{marginTop: '50px'}}>
-      <Row>
-        <Col className="custom-col">Task</Col> 
-        <Col className="custom-col">Boost</Col> 
-        <Col className="custom-col">Stats</Col> 
-        <Col className="custom-col">Ref</Col> 
-      </Row>
-    </Container>
+                <Row>
+                    <Col className="custom-col">Task</Col> 
+                    <Col className="custom-col">Boost</Col> 
+                    <Col className="custom-col">Stats</Col> 
+                    <Col className="custom-col">Ref</Col> 
+                </Row>
+            </Container>
 
-    <Container>
-        <Form>
-        <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
-        <Form.Label column sm="2">
-          Withdraw
-        </Form.Label>
-        <Col sm="10">
-          <Form.Control type="text" placeholder="Enter amount of tokens" />
-        </Col>
-      </Form.Group>
-        </Form>
-        <Button variant="primary" onClick={startRefill}>Withdraw</Button>{' '}
-    </Container>
+            <Container>
+                <Form>
+                    <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
+                        <Form.Label column sm="2">
+                            Withdraw
+                        </Form.Label>
+                        <Col sm="10">
+                            <Form.Control type="text" placeholder="Enter amount of tokens" />
+                        </Col>
+                    </Form.Group>
+                </Form>
+                <Button variant="primary">Withdraw</Button>
+            </Container>
         </div>
     );
 }
