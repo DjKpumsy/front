@@ -48,27 +48,6 @@ function App() {
     }, []);
 
     useEffect(() => {
-        // Function to start the refill process
-        const startRefill = () => {
-            if (!refillInterval) {
-                const intervalId = setInterval(() => {
-                    setProgress(prevProgress => {
-                        if (prevProgress < 100) {
-                            return prevProgress + 1;
-                        } else {
-                            clearInterval(intervalId);
-                            setRefillInterval(null);
-                            return prevProgress;
-                        }
-                    });
-                }, 1000); // Adjust the refill speed as needed
-                setRefillInterval(intervalId);
-            }
-        };
-
-        // Start the refill process when the component mounts
-        startRefill();
-
         // Cleanup the interval when the component unmounts
         return () => {
             if (refillInterval) {
@@ -76,6 +55,30 @@ function App() {
             }
         };
     }, [refillInterval]);
+
+    const startRefill = () => {
+        if (!refillInterval) {
+            const intervalId = setInterval(() => {
+                setProgress(prevProgress => {
+                    if (prevProgress < 100) {
+                        return prevProgress + 1;
+                    } else {
+                        clearInterval(intervalId);
+                        setRefillInterval(null);
+                        return prevProgress;
+                    }
+                });
+            }, 1000); // Adjust the refill speed as needed
+            setRefillInterval(intervalId);
+        }
+    };
+
+    const stopRefill = () => {
+        if (refillInterval) {
+            clearInterval(refillInterval);
+            setRefillInterval(null);
+        }
+    };
 
     const addPoints = async () => {
         if (progress === 0) return; // Stop function if progress is 0
@@ -89,11 +92,7 @@ function App() {
 
             setVibrate(true); // Trigger vibration effect
 
-            // Stop the refill process
-            if (refillInterval) {
-                clearInterval(refillInterval);
-                setRefillInterval(null);
-            }
+            stopRefill(); // Stop the refill process
 
             try {
                 const res = await axios.post('https://back-w4s1.onrender.com/addPoints', {
@@ -113,30 +112,6 @@ function App() {
         }
     };
 
-    const handleMouseDown = () => {
-        if (refillInterval) {
-            clearInterval(refillInterval);
-            setRefillInterval(null);
-        }
-    };
-
-    const handleMouseUp = () => {
-        if (!refillInterval) {
-            const intervalId = setInterval(() => {
-                setProgress(prevProgress => {
-                    if (prevProgress < 100) {
-                        return prevProgress + 1;
-                    } else {
-                        clearInterval(intervalId);
-                        setRefillInterval(null);
-                        return prevProgress;
-                    }
-                });
-            }, 1000); // Adjust the refill speed as needed
-            setRefillInterval(intervalId);
-        }
-    };
-
     return (
         <div className="App">
             {/* <h1>Welcome {user ? user.username : 'User'}</h1> */}
@@ -148,9 +123,8 @@ function App() {
             /> {points} </h1>
             
             <div className={`image-container ${vibrate ? 'vibrate' : ''}`} 
-                onClick={addPoints} 
-                onMouseDown={handleMouseDown} 
-                onMouseUp={handleMouseUp}>
+                onMouseDown={addPoints} 
+                onMouseUp={startRefill}>
                 
                 <img 
                     src={buttonImage} 
