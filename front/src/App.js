@@ -86,7 +86,7 @@ function App() {
                     style={{ cursor: 'pointer', width: '300px', height: '320px' }} 
                 />
             </div>
-            {showPlusOne && <div className="plus-one">+1</div>}
+           
             {/* <p>Your referral link: {referralLink}</p> */}
             <div className='lab'>
             <ProgressBar now={now} striped variant="warning" label={`${now}%`} />
