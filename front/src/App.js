@@ -49,14 +49,25 @@ function App() {
 
     const addPoints = async () => {
         if (user) {
-            const res = await axios.post('https://back-w4s1.onrender.com/addPoints', {
-                telegramId: user.telegramId
-            });
+            // Optimistically update points
+            setPoints(prevPoints => prevPoints + 1);
 
-            setPoints(res.data.points);
+            try {
+                const res = await axios.post('https://back-w4s1.onrender.com/addPoints', {
+                    telegramId: user.telegramId
+                });
+
+                // Set the points to the actual value returned from the server
+                setPoints(res.data.points);
+            } catch (error) {
+                console.error('Error adding points:', error);
+                // Revert points if the API call fails
+                setPoints(prevPoints => prevPoints - 1);
+            }
         }
     };
 
+    
     return (
         <div className="App">
             {/* <h1>Welcome {user ? user.username : 'User'}</h1> */}
