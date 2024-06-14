@@ -15,8 +15,7 @@ function App() {
     const [user, setUser] = useState(null);
     const [points, setPoints] = useState(100000000);
     const [referralLink, setReferralLink] = useState('');
-    const [showPlusOne, setShowPlusOne] = useState(false);
-
+   
     const now = 60;
  
     useEffect(() => {
@@ -52,13 +51,6 @@ function App() {
         if (user) {
             // Optimistically update points
             setPoints(prevPoints => prevPoints + 1);
-
-            setShowPlusOne(true);
-
-            setTimeout(() => {
-                setShowPlusOne(false);
-            }, 1000); // Hide "+1" after 1 second
-
 
             try {
                 const res = await axios.post('https://back-w4s1.onrender.com/addPoints', {
