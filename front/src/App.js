@@ -16,9 +16,10 @@ function App() {
     const [points, setPoints] = useState(100000000);
     const [referralLink, setReferralLink] = useState('');
     const [vibrate, setVibrate] = useState(false); // State for vibration effect
+    const [progress, setProgress] = useState(100); // State for progress bar value
 
    
-    const now = 60;
+    const now = 100;
  
     useEffect(() => {
         // Ensure that the Telegram Web App SDK is available
@@ -53,6 +54,9 @@ function App() {
         if (user) {
             // Optimistically update points
             setPoints(prevPoints => prevPoints + 1);
+
+              // Reduce progress bar value
+              setProgress(prevProgress => (prevProgress > 0 ? prevProgress - 1 : 0));
 
             setVibrate(true); // Trigger vibration effect
 
@@ -96,8 +100,8 @@ function App() {
            
             {/* <p>Your referral link: {referralLink}</p> */}
             <div className='lab'>
-            <ProgressBar now={now} striped variant="warning" label={`${now}%`} />
-         <h5>1000/1000</h5>
+            <ProgressBar now={progress} striped variant="warning" label={`${progress}%`} />
+                <h5>{progress * 10}/1000</h5>
             </div>
 
             <Container style={{marginTop: '50px'}}>
