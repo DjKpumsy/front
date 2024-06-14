@@ -135,8 +135,14 @@ function App() {
            
             {/* <p>Your referral link: {referralLink}</p> */}
             <div className='lab'>
-                <ProgressBar now={progress} striped variant="warning" label={`${progress}%`} />
-                <h5>{progress }/100</h5>
+                <ProgressBar 
+                    now={progress} 
+                    striped 
+                    variant="warning" 
+                    label={`${progress}%`} 
+                    className={progress > 0 ? 'progress-bar-animated' : ''}
+                />
+                <h5>{progress}/100</h5>
             </div>
 
             <Container style={{marginTop: '50px'}}>
