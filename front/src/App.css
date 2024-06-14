@@ -32,6 +32,7 @@
   font-size: 50px;
   margin-top: -50px;
   margin-bottom: 30px;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 .App img {
@@ -62,4 +63,44 @@ width: 80%;
 
 .custom-col:hover {
   background-color: #e0e0e0;
+}
+
+.image-container {
+  position: relative;
+  display: inline-block;
+}
+
+.plus-one {
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 24px;
+  color: gold;
+  animation: moveUp 1s ease-in-out;
+  pointer-events: none; /* Ensures clicks pass through the +1 text */
+}
+
+@keyframes moveUp {
+  0% {
+      opacity: 1;
+      transform: translate(-50%, 20px);
+  }
+  100% {
+      opacity: 0;
+      transform: translate(-50%, -20px);
+  }
+}
+
+.vibrate {
+  animation: vibrate 0.3s linear;
+}
+
+@keyframes vibrate {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(2px, -2px); }
+  60% { transform: translate(-2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
 }
