@@ -109,7 +109,7 @@
   border-radius: 25px;
   overflow: hidden;
   position: relative;
-  height: 30px;
+  height: 20px;
 }
 
 .progress-bar {
@@ -126,5 +126,5 @@
   text-align: center;
   color: black;
   font-weight: bold;
-  line-height: 30px; /* Match the height of the progress bar */
+  line-height: 20px; /* Match the height of the progress bar */
 }
