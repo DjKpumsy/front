@@ -14,7 +14,7 @@ function App() {
     const [points, setPoints] = useState(100000000);
     const [referralLink, setReferralLink] = useState('');
     const [vibrate, setVibrate] = useState(false); // State for vibration effect
-    const [progress, setProgress] = useState(100); // State for progress bar value
+    const [progress, setProgress] = useState(1000); // State for progress bar value
     const [refillInterval, setRefillInterval] = useState(null); // State for refill interval ID
 
     useEffect(() => {
@@ -59,7 +59,7 @@ function App() {
         if (!refillInterval) {
             const intervalId = setInterval(() => {
                 setProgress(prevProgress => {
-                    if (prevProgress < 100) {
+                    if (prevProgress < 1000) {
                         return prevProgress + 1;
                     } else {
                         clearInterval(intervalId);
