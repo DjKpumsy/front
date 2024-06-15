@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';  // Import the CSS file
 import buttonImage from './assets/tap-coin.png'; 
-// import ProgressBar from 'react-bootstrap/ProgressBar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -15,7 +14,7 @@ function App() {
     const [points, setPoints] = useState(100000000);
     const [referralLink, setReferralLink] = useState('');
     const [vibrate, setVibrate] = useState(false); // State for vibration effect
-    const [progress, setProgress] = useState(1000); // State for progress bar value
+    const [progress, setProgress] = useState(100); // State for progress bar value
     const [refillInterval, setRefillInterval] = useState(null); // State for refill interval ID
 
     useEffect(() => {
@@ -60,7 +59,7 @@ function App() {
         if (!refillInterval) {
             const intervalId = setInterval(() => {
                 setProgress(prevProgress => {
-                    if (prevProgress < 1000) {
+                    if (prevProgress < 100) {
                         return prevProgress + 1;
                     } else {
                         clearInterval(intervalId);
@@ -114,13 +113,14 @@ function App() {
 
     return (
         <div className="App">
-            {/* <h1>Welcome {user ? user.username : 'User'}</h1> */}
-           
-            <h1>  <img 
-                src={buttonImage} 
-                alt="Earn Points" 
-                style={{ cursor: 'pointer', width: '40px', height: '40px', marginBottom: '-3px', marginRight: '-12px' }} 
-            /> {points} </h1>
+            <h1>  
+                <img 
+                    src={buttonImage} 
+                    alt="Earn Points" 
+                    style={{ cursor: 'pointer', width: '40px', height: '40px', marginBottom: '-3px', marginRight: '-12px' }} 
+                /> 
+                {points} 
+            </h1>
             
             <div className={`image-container ${vibrate ? 'vibrate' : ''}`} 
                 onMouseDown={addPoints} 
@@ -133,7 +133,6 @@ function App() {
                 />
             </div>
            
-            {/* <p>Your referral link: {referralLink}</p> */}
             <div className='lab'>
                 <div className="progress-container">
                     <div 
