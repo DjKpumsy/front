@@ -87,7 +87,7 @@ function App() {
             setPoints(prevPoints => prevPoints + 1);
 
             // Reduce progress bar value
-            setProgress(prevProgress => (prevProgress > 0 ? prevProgress - 100 : 0));
+            setProgress(prevProgress => (prevProgress > 0 ? prevProgress - 1 : 0));
 
             setVibrate(true); // Trigger vibration effect
 
