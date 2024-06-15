@@ -22,13 +22,11 @@
   font-size: 18px;
 }
 
-
-
 .App button:hover {
   background-color: #fff5b3;
 }
 
-.App h1{
+.App h1 {
   font-size: 50px;
   margin-top: -50px;
   margin-bottom: 30px;
@@ -43,10 +41,10 @@
   transform: scale(1.1);
 }
 
-.lab{
-margin-left: 5px;
-margin-top: 50px;
-width: 80%;
+.lab {
+  margin-left: 5px;
+  margin-top: 50px;
+  width: 80%;
 }
 
 .custom-col {
@@ -105,37 +103,18 @@ width: 80%;
   100% { transform: translate(0); }
 }
 
-@keyframes move {
-  0% {
-    background-position: 0% 0%;
-  }
-  100% {
-    background-position: 100% 100%;
-  }
-}
-
 .progress-container {
   width: 100%;
-  background-color: #e0e0e0;
+  background-color: black; /* Default background color */
   border-radius: 25px;
   overflow: hidden;
   position: relative;
+  height: 30px;
 }
 
 .progress-bar {
-  height: 30px;
-  background: linear-gradient(
-    45deg,
-    rgba(255, 255, 255, 0.2) 25%,
-    rgba(0, 0, 0, 0.2) 25%,
-    rgba(0, 0, 0, 0.2) 50%,
-    rgba(255, 255, 255, 0.2) 50%,
-    rgba(255, 255, 255, 0.2) 75%,
-    rgba(0, 0, 0, 0.2) 75%,
-    rgba(0, 0, 0, 0.2) 100%
-  );
-  background-size: 200% 200%;
-  animation: move 2s linear infinite;
+  height: 100%;
+  background-color: yellow; /* Fill color */
   border-radius: 25px;
   transition: width 0.2s ease-in-out;
   position: relative;
@@ -145,7 +124,7 @@ width: 80%;
   position: absolute;
   width: 100%;
   text-align: center;
-  font-weight: bold;
   color: black;
+  font-weight: bold;
   line-height: 30px; /* Match the height of the progress bar */
 }
