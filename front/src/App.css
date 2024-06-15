@@ -105,7 +105,7 @@
 
 .progress-container {
   width: 100%;
-  background-color: green; /* Default background color */
+  background-color: black; /* Default background color */
   border-radius: 25px;
   overflow: hidden;
   position: relative;
