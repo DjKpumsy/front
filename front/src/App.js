@@ -137,7 +137,7 @@ function App() {
                 <div className="progress-container">
                     <div 
                         className="progress-bar"
-                        style={{ width: `${progress}%` }}
+                        style={{ width: `${progress}%`, backgroundColor: 'yellow' }}
                     >
                         <span className="progress-bar-label">{`${progress}%`}</span>
                     </div>
