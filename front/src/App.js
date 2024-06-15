@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';  // Import the CSS file
 import buttonImage from './assets/tap-coin.png'; 
-import ProgressBar from 'react-bootstrap/ProgressBar';
+// import ProgressBar from 'react-bootstrap/ProgressBar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -135,13 +135,14 @@ function App() {
            
             {/* <p>Your referral link: {referralLink}</p> */}
             <div className='lab'>
-                <ProgressBar 
-                    now={progress} 
-                    striped 
-                    variant="warning" 
-                    label={`${progress}%`} 
-                    className={progress > 0 ? 'progress-bar-animated' : ''}
-                />
+                <div className="progress-container">
+                    <div 
+                        className="progress-bar"
+                        style={{ width: `${progress}%` }}
+                    >
+                        <span className="progress-bar-label">{`${progress}%`}</span>
+                    </div>
+                </div>
                 <h5>{progress}/100</h5>
             </div>
 
