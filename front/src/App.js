@@ -16,7 +16,8 @@ function App() {
     const [vibrate, setVibrate] = useState(false); // State for vibration effect
     const [progress, setProgress] = useState(1000); // State for progress bar value
     const [refillInterval, setRefillInterval] = useState(null); // State for refill interval ID
-
+    const [maxProgress, setMaxProgress] = useState(1000); // State for max progress value
+    
     useEffect(() => {
         // Ensure that the Telegram Web App SDK is available
         if (window.Telegram && window.Telegram.WebApp) {
@@ -59,7 +60,7 @@ function App() {
         if (!refillInterval) {
             const intervalId = setInterval(() => {
                 setProgress(prevProgress => {
-                    if (prevProgress < 1000) {
+                    if (prevProgress < maxProgress) {
                         return prevProgress + 1;
                     } else {
                         clearInterval(intervalId);
@@ -71,6 +72,7 @@ function App() {
             setRefillInterval(intervalId);
         }
     };
+
 
     const stopRefill = () => {
         if (refillInterval) {
@@ -137,12 +139,12 @@ function App() {
                 <div className="progress-container">
                     <div 
                         className="progress-bar"
-                        style={{ width: `${progress}%`, backgroundColor: 'yellow' }}
+                        style={{ width: `${(progress / maxProgress) * 100}%` }}
                     >
-                        <span className="progress-bar-label">{`${progress}%`}</span>
+                        <span className="progress-bar-label">{`${progress}/${maxProgress}`}</span>
                     </div>
                 </div>
-                <h5>{progress}/100</h5>
+                <h5>{progress}/{maxProgress}</h5>
             </div>
 
             <Container style={{marginTop: '50px'}}>
