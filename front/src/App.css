@@ -28,7 +28,7 @@
 
 .App h1 {
   font-size: 50px;
-  margin-top: -500px;
+  margin-top: -50px;
   margin-bottom: 30px;
   font-family: Arial;
 }
@@ -109,7 +109,7 @@
   border-radius: 25px;
   overflow: hidden;
   position: relative;
-  height: 20px;
+  height: 30px;
 }
 
 .progress-bar {
@@ -126,5 +126,5 @@
   text-align: center;
   color: black;
   font-weight: bold;
-  line-height: 20px; /* Match the height of the progress bar */
+  line-height: 30px; /* Match the height of the progress bar */
 }
