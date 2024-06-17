@@ -151,7 +151,7 @@ function App() {
                     <Col className="custom-col">Task</Col> 
                     <Col className="custom-col">Boost</Col> 
                     <Col className="custom-col">Stats</Col> 
-                    <Col className="custom-col">Ref</Col> 
+                    <Col className="custom-col">Refx</Col> 
                 </Row>
             </Container>
 
