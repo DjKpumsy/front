@@ -12,7 +12,7 @@
 }
 
 .App button {
-  background-color:  #fff5b3;
+  background-color: #fff5b3;
   color: #3e1d38;
   border: none;
   padding: 10px 20px;
@@ -81,12 +81,12 @@
 
 @keyframes moveUp {
   0% {
-      opacity: 1;
-      transform: translate(-50%, 20px);
+    opacity: 1;
+    transform: translate(-50%, 20px);
   }
   100% {
-      opacity: 0;
-      transform: translate(-50%, -20px);
+    opacity: 0;
+    transform: translate(-50%, -20px);
   }
 }
 
