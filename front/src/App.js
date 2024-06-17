@@ -11,12 +11,12 @@ import Button from 'react-bootstrap/Button';
 
 function App() {
     const [user, setUser] = useState(null);
-    const [points, setPoints] = useState(100000000);
+    const [points, setPoints] = useState(0);
     const [referralLink, setReferralLink] = useState('');
     const [vibrate, setVibrate] = useState(false); // State for vibration effect
     const [progress, setProgress] = useState(1000); // State for progress bar value
     const [refillInterval, setRefillInterval] = useState(null); // State for refill interval ID
-    const [maxProgress, setMaxProgress] = useState(500); // State for max progress value
+    const [maxProgress, setMaxProgress] = useState(1000); // State for max progress value
     
     useEffect(() => {
         // Ensure that the Telegram Web App SDK is available
@@ -152,7 +152,7 @@ function App() {
                     <Col className="custom-col">Task</Col> 
                     <Col className="custom-col">Boost</Col> 
                     <Col className="custom-col">Stats</Col> 
-                    <Col className="custom-col">Reff</Col> 
+                    <Col className="custom-col">Ref</Col> 
                 </Row>
             </Container>
 
