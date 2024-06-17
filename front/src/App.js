@@ -119,7 +119,7 @@ function App() {
                 <img 
                     src={buttonImage} 
                     alt="Earn Points" 
-                    style={{ cursor: 'pointer', width: '40px', height: '40px', marginBottom: '-3px', marginRight: '-12px' }} 
+                    style={{ cursor: 'pointer', width: '40px', height: '40px', marginBottom: '-10px', marginRight: '-12px' }} 
                 /> 
                 {points} 
             </h1>
