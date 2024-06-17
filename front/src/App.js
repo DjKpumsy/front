@@ -115,7 +115,7 @@ function App() {
 
     return (
         <div className="App">
-            <h1>  
+            <h1 style={{top: '300px'}}>  
                 <img 
                     src={buttonImage} 
                     alt="Earn Points" 
