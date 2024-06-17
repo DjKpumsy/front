@@ -124,7 +124,7 @@
   position: absolute;
   width: 100%;
   text-align: center;
-  color: black;
+  color: white;
   font-weight: bold;
   line-height: 30px; /* Match the height of the progress bar */
 }
