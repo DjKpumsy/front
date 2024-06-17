@@ -15,9 +15,9 @@ function App() {
     const [referralLink, setReferralLink] = useState('');
     const [vibrate, setVibrate] = useState(false); // State for vibration effect
     const [progress, setProgress] = useState(1000); // State for progress bar value
-    const [refillInterval, setRefillInterval] = useState(null); // State for refill interval ID
     const [maxProgress, setMaxProgress] = useState(1000); // State for max progress value
-    
+    const [refillInterval, setRefillInterval] = useState(null); // State for refill interval ID
+
     useEffect(() => {
         // Ensure that the Telegram Web App SDK is available
         if (window.Telegram && window.Telegram.WebApp) {
@@ -72,7 +72,6 @@ function App() {
             setRefillInterval(intervalId);
         }
     };
-
 
     const stopRefill = () => {
         if (refillInterval) {
