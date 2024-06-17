@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './App.css';  // Import the CSS file
 import buttonImage from './assets/tap-coin.png'; 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Container from 'react-bootstrap/Container';
@@ -112,8 +111,36 @@ function App() {
         }
     };
 
+    const progressContainerStyle = {
+        width: '100%',
+        backgroundColor: 'black', // Default background color
+        borderRadius: '25px',
+        overflow: 'hidden',
+        position: 'relative',
+        height: '30px',
+        marginTop: '20px'
+    };
+
+    const progressBarStyle = {
+        height: '100%',
+        backgroundColor: 'yellow', // Fill color
+        borderRadius: '25px',
+        transition: 'width 0.2s ease-in-out',
+        position: 'relative',
+        width: `${(progress / maxProgress) * 100}%`
+    };
+
+    const progressBarLabelStyle = {
+        position: 'absolute',
+        width: '100%',
+        textAlign: 'center',
+        color: 'black',
+        fontWeight: 'bold',
+        lineHeight: '30px' // Match the height of the progress bar
+    };
+
     return (
-        <div className="App">
+        <div className="App" style={{backgroundColor: '#3e1d38', color: 'white', minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', textAlign: 'center', fontFamily: 'Arial, sans-serif'}}>
             <h1 style={{marginTop: '300px'}}>  
                 <img 
                     src={buttonImage} 
@@ -125,22 +152,20 @@ function App() {
             
             <div className={`image-container ${vibrate ? 'vibrate' : ''}`} 
                 onMouseDown={addPoints} 
-                onMouseUp={startRefill}>
-                
+                onMouseUp={startRefill}
+                style={{position: 'relative', display: 'inline-block'}}
+            >
                 <img 
                     src={buttonImage} 
                     alt="Earn Points" 
-                    style={{ cursor: 'pointer', width: '200px', height: '220px' }} 
+                    style={{ cursor: 'pointer', width: '200px', height: '220px', transition: 'transform 0.3s' }} 
                 />
             </div>
            
-            <div className='lab'>
-                <div className="progress-container">
-                    <div 
-                        className="progress-bar"
-                        style={{ width: `${(progress / maxProgress) * 100}%` }}
-                    >
-                        <span className="progress-bar-label">{`${progress}/${maxProgress}`}</span>
+            <div className='lab' style={{marginLeft: '5px', marginTop: '50px', width: '80%'}}>
+                <div className="progress-container" style={progressContainerStyle}>
+                    <div className="progress-bar" style={progressBarStyle}>
+                        <span className="progress-bar-label" style={progressBarLabelStyle}>{`${progress}/${maxProgress}`}</span>
                     </div>
                 </div>
                 <h5>{progress}/{maxProgress}</h5>
@@ -148,10 +173,10 @@ function App() {
 
             <Container style={{marginTop: '50px'}}>
                 <Row>
-                    <Col className="custom-col">Task</Col> 
-                    <Col className="custom-col">Boost</Col> 
-                    <Col className="custom-col">Stats</Col> 
-                    <Col className="custom-col">Refx</Col> 
+                    <Col className="custom-col" style={{backgroundColor: 'white', color: '#702963', borderRadius: '20px', margin: '10px', width: '50%', padding: '10px', textAlign: 'center', cursor: 'pointer', transition: 'background-color 0.3s'}}>Task</Col> 
+                    <Col className="custom-col" style={{backgroundColor: 'white', color: '#702963', borderRadius: '20px', margin: '10px', width: '50%', padding: '10px', textAlign: 'center', cursor: 'pointer', transition: 'background-color 0.3s'}}>Boost</Col> 
+                    <Col className="custom-col" style={{backgroundColor: 'white', color: '#702963', borderRadius: '20px', margin: '10px', width: '50%', padding: '10px', textAlign: 'center', cursor: 'pointer', transition: 'background-color 0.3s'}}>Stats</Col> 
+                    <Col className="custom-col" style={{backgroundColor: 'white', color: '#702963', borderRadius: '20px', margin: '10px', width: '50%', padding: '10px', textAlign: 'center', cursor: 'pointer', transition: 'background-color 0.3s'}}>Ref</Col> 
                 </Row>
             </Container>
 
