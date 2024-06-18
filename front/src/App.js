@@ -190,7 +190,7 @@ function App() {
                 <Form>
                     <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword">
                         <Form.Label column sm="2">
-                            Withdraw
+                            Withdraw tokens
                         </Form.Label>
                         <Col sm="10">
                             <Form.Control type="text" placeholder="Enter amount of tokens" />
