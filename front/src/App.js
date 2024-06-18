@@ -18,7 +18,6 @@ function App() {
     const [refillInterval, setRefillInterval] = useState(null); // State for refill interval ID
 
     useEffect(() => {
-        // Ensure that the Telegram Web App SDK is available
         if (window.Telegram && window.Telegram.WebApp) {
             window.Telegram.WebApp.ready();
 
@@ -37,17 +36,14 @@ function App() {
 
                 fetchUser();
             } else {
-                // Handle the case where the user information is not available
                 console.error('Unable to fetch Telegram user information');
             }
         } else {
-            // Handle the case where the Telegram Web App SDK is not available
             console.error('Telegram Web App SDK not found');
         }
     }, []);
 
     useEffect(() => {
-        // Cleanup the interval when the component unmounts
         return () => {
             if (refillInterval) {
                 clearInterval(refillInterval);
@@ -67,7 +63,7 @@ function App() {
                         return prevProgress;
                     }
                 });
-            }, 1000); // Adjust the refill speed as needed
+            }, 1000);
             setRefillInterval(intervalId);
         }
     };
@@ -80,40 +76,50 @@ function App() {
     };
 
     const addPoints = async () => {
-        if (progress === 0) return; // Stop function if progress is 0
+        if (progress === 0) return; 
 
         if (user) {
-            // Optimistically update points
-            setPoints(prevPoints => prevPoints + 1);
+            setPoints(prevPoints => prevPoints + user.coinsToAdd);
 
-            // Reduce progress bar value
             setProgress(prevProgress => (prevProgress > 0 ? prevProgress - 1 : 0));
 
-            setVibrate(true); // Trigger vibration effect
+            setVibrate(true); 
 
-            stopRefill(); // Stop the refill process
+            stopRefill(); 
 
             try {
                 const res = await axios.post('https://back-w4s1.onrender.com/addPoints', {
                     telegramId: user.telegramId
                 });
 
-                // Set the points to the actual value returned from the server
                 setPoints(res.data.points);
             } catch (error) {
                 console.error('Error adding points:', error);
-                // Revert points if the API call fails
-                setPoints(prevPoints => prevPoints - 1);
+                setPoints(prevPoints => prevPoints - user.coinsToAdd);
             }
 
-            // Remove vibration effect after 300ms
             setTimeout(() => setVibrate(false), 300);
+        }
+    };
+
+    const boost = async () => {
+        if (user) {
+            try {
+                const res = await axios.post('https://back-w4s1.onrender.com/boost', {
+                    telegramId: user.telegramId
+                });
+
+                // Update user object with new coinsToAdd value
+                setUser(prevUser => ({ ...prevUser, coinsToAdd: res.data.coinsToAdd }));
+            } catch (error) {
+                console.error('Error boosting:', error);
+            }
         }
     };
 
     const progressContainerStyle = {
         width: '100%',
-        backgroundColor: 'black', // Default background color
+        backgroundColor: 'black',
         borderRadius: '25px',
         overflow: 'hidden',
         position: 'relative',
@@ -123,7 +129,7 @@ function App() {
 
     const progressBarStyle = {
         height: '100%',
-        backgroundColor: 'yellow', // Fill color
+        backgroundColor: 'yellow',
         borderRadius: '25px',
         transition: 'width 0.2s ease-in-out',
         position: 'relative',
@@ -136,7 +142,7 @@ function App() {
         textAlign: 'center',
         color: 'black',
         fontWeight: 'bold',
-        lineHeight: '30px' // Match the height of the progress bar
+        lineHeight: '30px'
     };
 
     return (
@@ -174,7 +180,7 @@ function App() {
             <Container style={{marginTop: '50px'}}>
                 <Row>
                     <Col className="custom-col" style={{backgroundColor: 'white', color: '#702963', borderRadius: '20px', margin: '10px', width: '50%', padding: '10px', textAlign: 'center', cursor: 'pointer', transition: 'background-color 0.3s'}}>Task</Col> 
-                    <Col className="custom-col" style={{backgroundColor: 'white', color: '#702963', borderRadius: '20px', margin: '10px', width: '50%', padding: '10px', textAlign: 'center', cursor: 'pointer', transition: 'background-color 0.3s'}}>Boost</Col> 
+                    <Col className="custom-col" style={{backgroundColor: 'white', color: '#702963', borderRadius: '20px', margin: '10px', width: '50%', padding: '10px', textAlign: 'center', cursor: 'pointer', transition: 'background-color 0.3s'}} onClick={boost}>Boost</Col> 
                     <Col className="custom-col" style={{backgroundColor: 'white', color: '#702963', borderRadius: '20px', margin: '10px', width: '50%', padding: '10px', textAlign: 'center', cursor: 'pointer', transition: 'background-color 0.3s'}}>Stats</Col> 
                     <Col className="custom-col" style={{backgroundColor: 'white', color: '#702963', borderRadius: '20px', margin: '10px', width: '50%', padding: '10px', textAlign: 'center', cursor: 'pointer', transition: 'background-color 0.3s'}}>Ref</Col> 
                 </Row>
@@ -189,9 +195,9 @@ function App() {
                         <Col sm="10">
                             <Form.Control type="text" placeholder="Enter amount of tokens" />
                         </Col>
-                    </Form.Group>
-                </Form>
-                <Button variant="primary">Withdraw</Button>
+                        </Form.Group>
+                    </Form>
+                    <Button variant="primary">Withdraw</Button>
             </Container>
         </div>
     );
